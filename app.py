@@ -116,8 +116,14 @@ with st.spinner("Processing Dataset & Computing Aggregations..."):
 # Check if data exists
 if app_df is None or merged_df is None:
     st.error("""
-        ### 🚨 Missing Data Files
+        ### 🚨 Missing Data Sources
+        We were unable to load the datasets! 
+        
+        **For Local Runs:**
         Please place `application_data.csv` and `previous_application.csv` in the root directory.
+        
+        **For Cloud Deployments:**
+        You must ensure the default `app_path` and `prev_app_path` variables in `data_processor.py` point to live, raw CSV URLs (like AWS S3 or a raw Google Drive link) since the datasets exceed GitHub's 100MB file limit.
     """)
     st.stop()
 

@@ -5,12 +5,13 @@ import os
 
 @st.cache_data
 def load_and_clean_data(app_path="application_data.csv", prev_app_path="previous_application.csv"):
-    if not os.path.exists(app_path) or not os.path.exists(prev_app_path):
+    try:
+        # Load data (Pandas read_csv inherently supports HTTP URLs)
+        app = pd.read_csv(app_path)
+        prev_app = pd.read_csv(prev_app_path)
+    except Exception as e:
+        print(f"Error loading datasets from {app_path} or {prev_app_path}: {e}")
         return None, None, None
-
-    # Load data
-    app = pd.read_csv(app_path)
-    prev_app = pd.read_csv(prev_app_path)
 
     # Clean app data
     msng_info = pd.DataFrame(app.isnull().sum().sort_values()).reset_index()
